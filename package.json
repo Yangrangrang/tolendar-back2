@@ -20,11 +20,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:dev:deploy": "prisma migrate deploy",
     "db:dev:rm": "docker compose rm tolendar-db -s -f -v",
-    "db:dev:up": "docker compose up tolendar-db -d"
+    "db:dev:up": "docker compose up tolendar-db -d",
+    "db:adminer:rm": "docker compose rm adminer -s -f -v",
+    "db:adminer:up": "docker compose up adminer -d"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^10.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.14.0",
     "reflect-metadata": "^0.1.13",
