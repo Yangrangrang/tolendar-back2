@@ -16,4 +16,15 @@ model User {
   password String
   email    String  @unique
   name     String?
+  Todo     Todo[]
+}
+
+model Todo {
+  todoId      Int      @id @default(autoincrement())
+  content     String // todo 내용
+  isDone      Boolean // 완료 여부
+  todoDate    DateTime // 완료 예정일
+  alarmStatus Boolean? // 알람여부
+  userId      User     @relation(fields: [userUserId], references: [userId])
+  userUserId  Int
 }

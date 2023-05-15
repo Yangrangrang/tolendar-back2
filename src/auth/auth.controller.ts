@@ -8,10 +8,12 @@ export class AuthController {
   constructor(private authService : AuthService){}
 
   @Public()
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
+  // @UseGuards(AuthGuard)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>){
-    return this.authService.signIn(signInDto.userEmail, signInDto.userPassword);
+    console.log(signInDto);
+    return this.authService.Login(signInDto.username, signInDto.password);
   }
 
   @UseGuards(AuthGuard)

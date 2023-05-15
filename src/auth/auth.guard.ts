@@ -6,9 +6,16 @@ import { jwtConstants } from "./constants";
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "./decorators/public.decorator";
 
+// Injectable() 데코레이터를 사용하여 NestJS에 의해 인스턴스화될 수 있도록 표시
 @Injectable()
+// CanActivate 인터페이스를 구현하면 nestjs에서 제공하는 Guard를 사용할 수 있음.
+
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService : JwtService, private reflector : Reflector){}
+
+  constructor(
+    private jwtService : JwtService, 
+    private reflector : Reflector
+    ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY,[
@@ -19,7 +26,6 @@ export class AuthGuard implements CanActivate {
       // 조건
       return true;
     }
-
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTockenFromHeader(request);
@@ -36,11 +42,13 @@ export class AuthGuard implements CanActivate {
       );
       request['user'] = payload;
     } catch {
+      // 요청 거부
       throw new UnauthorizedException();
     }
     return true;
   }
 
+  // 토큰 유효한지 확인
   private extractTockenFromHeader(request :Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
