@@ -11,7 +11,6 @@ export class UsersService {
   
   async findOne(username: string): Promise<User | undefined> {
     return prisma.user.findUnique({where: {username}});
-    // return this.users.find(user => user.userEmail === userEmail);
   }
 
   async findAll(userData : UserDto[]){
@@ -26,18 +25,9 @@ export class UsersService {
     return await prisma.user.findUnique({ where: { username: username } });
   }
 
+  // 회원가입 서비스
   async createUser(userData: UserDto) {
-    // const existingEmail = await this.findOneByEmail(userData.email);
-    // if (existingEmail) {
-    //   throw new HttpException('Email already exists', 409);
-    // }
-    
-    // const existingUsername = await this.findOneByUsername(userData.username);
-    // if (existingUsername) {
-    //   throw new HttpException('Username already exists', 422);
-    // }
-    
-    // try {
+    try {
       const created = await prisma.user.create({
         data: {
           username: userData.username,
@@ -47,11 +37,11 @@ export class UsersService {
         },
       });
       return created;
-    // } catch (e: any){
-    //   console.log('e=')
-    //   if (e.code == 'P2002') {
-    //     throw new HttpException(e.meta.target[0] + '이 중복되었쓰비', HttpStatus.FORBIDDEN);
-    //   }
-    // }
+    } catch (e: any){
+      console.log('e=', e)
+      if (e.code == 'P2002') {
+        throw new HttpException(e.meta.target[0] + '이 중복되었습니다', HttpStatus.FORBIDDEN);
+      }
+    }
   }
 }

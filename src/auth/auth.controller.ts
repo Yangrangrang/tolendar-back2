@@ -9,7 +9,7 @@ export class AuthController {
 
   @Public()
   // @HttpCode(HttpStatus.OK)
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>){
     console.log(signInDto);
@@ -19,6 +19,7 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req){
+    console.log(req.user);
     return req.user;
   }
 }

@@ -11,11 +11,16 @@ export class AuthService {
     ){}
   
   async Login(username: string , pass: string): Promise<any> {
+    // 유저의 아이디와 비밀번호를 인자로 받아서 아이디에 해당하는 유저를 데이터 베이스에서 찾음.
     const user = await this.userService.findOne(username);
+
+    // 유저의 비밀번호를 비교
     if(user?.password !== pass){
       throw new UnauthorizedException();
     }
-    const payload = {sub : user.userId};
+
+    // 해당 유저의 아이디를 sub 값으로 갖는 JWT(access_token)을 반환
+    const payload = {sub : user.userId , aud: user.username};
     return {
       access_token: await this.jwtService.signAsync(payload)
     };

@@ -20,7 +20,7 @@ export class UsersController {
 
   @Public()
   @Post('register')
-  async register(@Body() userData: UserDto): Promise<UserDto> {
+  register(@Body() userData: UserDto): Promise<UserDto> {
     // console.log(userData);
     return this.usersService.createUser(userData);
   }
