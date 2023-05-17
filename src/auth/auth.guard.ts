@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate {
     ]);
     if (isPublic){
       // 조건
+    console.log("2222");
       return true;
     }
 
@@ -32,6 +33,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTockenFromHeader(request);
 
     if (!token){
+      console.log("33333");
       throw new UnauthorizedException();
     }
     try {
@@ -41,6 +43,7 @@ export class AuthGuard implements CanActivate {
           secret: jwtConstants.secret
         }
       );
+      console.log("4444");
       request['user'] = payload;
     } catch {
       // 요청 거부
