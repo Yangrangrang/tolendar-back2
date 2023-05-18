@@ -1,6 +1,6 @@
 export default class UserDto {
-  userId  : number
-  username : string  
+  id  : number
+  userId : string  
   email : string
   password:  string
   name : string

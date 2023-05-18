@@ -21,7 +21,7 @@ export class UsersController {
   @Public()
   @Post('register')
   register(@Body() userData: UserDto): Promise<UserDto> {
-    // console.log(userData);
+    console.log(userData);
     return this.usersService.createUser(userData);
   }
 }

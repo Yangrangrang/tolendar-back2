@@ -9,8 +9,8 @@ const prisma = new PrismaClient();
 export class UsersService {
 
   
-  async findOne(username: string): Promise<User | undefined> {
-    return prisma.user.findUnique({where: {username}});
+  async findOne(userId: string): Promise<User | undefined> {
+    return prisma.user.findUnique({where: {userId}});
   }
 
   async findAll(userData : UserDto[]){
@@ -22,7 +22,7 @@ export class UsersService {
   }
 
   async findOneByUsername(username: string): Promise<User | undefined> {
-    return await prisma.user.findUnique({ where: { username: username } });
+    return await prisma.user.findUnique({ where: { userId: username } });
   }
 
   // 회원가입 서비스
@@ -30,7 +30,7 @@ export class UsersService {
     try {
       const created = await prisma.user.create({
         data: {
-          username: userData.username,
+          userId: userData.userId,
           email: userData.email,
           password: userData.password,
           name: userData.name,

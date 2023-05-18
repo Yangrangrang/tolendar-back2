@@ -8,21 +8,21 @@ datasource db {
 }
 
 model User {
+  id       Int     @id @default(autoincrement())
   email    String  @unique
   name     String?
   password String
-  userId   Int     @id @default(autoincrement())
-  username String  @unique
+  userId   String  @unique
   Todo     Todo[]
 }
 
 model Todo {
-  todoId       Int      @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   content      String
   isDone       Boolean  @default(false)
   todoDate     DateTime
   dayAgoAlarm  String?
   veryDayAlarm String?
-  userUserId   Int
-  userId       User     @relation(fields: [userUserId], references: [userId])
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
 }
