@@ -57,4 +57,20 @@ export class TodoController {
         return this.todoService.deleteTodoByTodoId(tid);
     }
 
+    @Public()
+    @Get('todo/:tid')
+    getTodo(@Param('tid') tid: number){
+        console.log(tid);
+        return this.todoService.getTodoByTodoId(tid);
+    }
+
+    @Public()
+    @Post('update/:uid/:tid')
+    isTodoUpdate(@Param('uid') uid: number, @Param('tid') tid: number, @Body() todoData : TodoDto){
+        console.log(uid);
+        console.log(tid);
+        console.log(todoData);
+        return this.todoService.updateTodoByTodoId(tid,todoData);
+    }
+
 }

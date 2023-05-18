@@ -28,6 +28,37 @@ export class TodoService {
         }
     }
 
+    // todo 수정
+    async updateTodoByTodoId (todoId: number, todoData : TodoDto){
+        const newTodoDate = new Date(todoData.todoDate);
+        let newdayAgoAlarm = "";
+        let newvaryDayAlarm = "";
+
+        if (todoData.dayAgoAlarm) {
+            newdayAgoAlarm = todoData.dayAgoAlarm
+        }
+        if (todoData.veryDayAlarm){
+            newvaryDayAlarm = todoData.veryDayAlarm;
+        }
+
+        try {
+            const updated = await prisma.todo.update({
+                where : {
+                    id : todoId,
+                },
+                data: {
+                    content: todoData.content,
+                    todoDate : newTodoDate,
+                    dayAgoAlarm : newdayAgoAlarm,
+                    veryDayAlarm : newvaryDayAlarm,
+                },
+            })
+            return updated;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     // 진행중인 todoList 가져오기
     async getUndoneTodoByUserId(userId : number) {
         try {
@@ -124,6 +155,20 @@ export class TodoService {
         } catch (e){
             console.error('deleteError', e);
             throw e;
+        }
+    }
+
+    // 특정 todo 가져오기
+    async getTodoByTodoId(todoId : number){
+        try {
+            const todo = await prisma.todo.findUnique({
+                where: {
+                    id : todoId
+                }
+            })
+        return todo;
+        } catch (e) {
+            console.log(e);
         }
     }
 }
