@@ -25,14 +25,19 @@
     "db:adminer:up": "docker compose up adminer -d"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.3",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/schedule": "^2.2.2",
     "@prisma/client": "^4.14.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dayjs": "^1.11.7",
+    "handlebars": "^4.7.7",
+    "nodemailer": "^6.9.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
@@ -40,6 +45,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/cron": "^2.0.1",
     "@types/express": "^4.17.13",
     "@types/jest": "29.5.0",
     "@types/node": "^18.15.11",

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import TodoDto from './todoDto';
+import { copyFileSync } from 'fs';
+import dayjs from 'dayjs';
 
 export type Todo = any;
 const prisma = new PrismaClient();
@@ -169,6 +171,60 @@ export class TodoService {
             })
         return todo;
         } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // 당일 알람데이터 조회
+    async getTodosWithAlarms(currentDate : Date){
+        console.log("todo",currentDate);
+        const on = "on";
+
+        try {
+            const todos = await prisma.todo.findMany({
+                where : {
+                    // dayAgoAlarm : on,
+                    veryDayAlarm : on,
+                    todoDate : currentDate,
+                },
+                include : {
+                    user : true,
+                }
+            })
+            console.log("getTodosWithAlarms", todos)
+            return todos
+        } catch (e){
+            console.log(e);
+            return []
+        }
+    }
+
+    addOneDay(date) {
+        const nextDay = dayjs(date).add(1, 'day');
+        return nextDay.format('YYYY-MM-DD');
+    }
+
+    // 전날 알람데이터 조회
+    async getPreviousDayAlarm (currentDate : Date){
+        console.log("getPreviousDayAlarm",currentDate);
+        const nextDay = this.addOneDay(currentDate);
+        const newNextDay = new Date(nextDay);
+        console.log(newNextDay);
+
+        const on = "on";
+        try {
+            const todos = await prisma.todo.findMany({
+                where: {
+                    dayAgoAlarm : on,
+                    todoDate : newNextDay,
+                },
+                include : {
+                    user : true,
+                },
+            })
+            console.log("getPreviousDayAlarm",todos)
+            return todos
+        } catch (e){
             console.log(e);
         }
     }
