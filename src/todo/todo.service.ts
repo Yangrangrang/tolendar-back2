@@ -84,6 +84,7 @@ export class TodoService {
 
     // 완료된 todoList 가져오기
     async getCompletedTodoByUserId(userId: number){
+        console.log('getCompletedTodoByUserId', userId);
         try {
             const completeTodos = await prisma.todo.findMany({
                 where: {

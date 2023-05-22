@@ -36,7 +36,7 @@ export class TodoController {
     @Get('pastList/:id')
     getPastTodoList(@Param('id') id: number) {
     // 지난 TodoList 조회 로직
-        console.log(id);
+        console.log("getPastTodoList" ,id);
         return this.todoService.getPastTodoByUserId(id);
     }
 

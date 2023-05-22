@@ -1,5 +1,3 @@
-import { User } from "@prisma/client"
-
 export default class TodoDto {
     id  : number
     content : string  

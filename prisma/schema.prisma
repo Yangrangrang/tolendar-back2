@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int        @id @default(autoincrement())
+  email    String     @unique
   name     String?
   password String
-  userId   String  @unique
+  userId   String     @unique
   Todo     Todo[]
+  Calendar Calendar[]
 }
 
 model Todo {
@@ -25,4 +26,15 @@ model Todo {
   veryDayAlarm String?
   userId       Int
   user         User     @relation(fields: [userId], references: [id])
+}
+
+model Calendar {
+  id              Int      @id @default(autoincrement())
+  title           String
+  start           DateTime
+  end             DateTime
+  backgroundColor String?
+  textColor       String?
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
 }
